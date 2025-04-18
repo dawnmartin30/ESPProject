@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "NimBLE_GATT_Server"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"gatt_svc.h": "c",
+			"heart_rate.h": "c",
+			"common.h": "c",
+			"cstdint": "c",
+			"inttypes.h": "c"
+		}
+	}
+}
