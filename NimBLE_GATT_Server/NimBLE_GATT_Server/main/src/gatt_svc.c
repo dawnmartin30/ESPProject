@@ -230,11 +230,18 @@ static int file_rw_chr_access(uint16_t conn_handle, uint16_t attr_handle,
         }
 
         if (is_ota_active && ota_handle != 0) {
+            if (len == 7 && memcmp(temp_buf, "OTA_END", 7) == 0) {
+                ESP_LOGI(TAG, "Received OTA_END signal from client");
+                gatt_complete_ota();  // reboot and finish
+                return 0;
+            }
+        
             rc = esp_ota_write(ota_handle, temp_buf, len);
             if (rc != ESP_OK) {
                 ESP_LOGE(TAG, "esp_ota_write failed: %s", esp_err_to_name(rc));
                 return BLE_ATT_ERR_UNLIKELY;
             }
+        
             ESP_LOGI(TAG, "OTA chunk written: %zu bytes", len);
         } else {
             FILE *f = fopen("/spiffs/upload.txt", "ab");
@@ -280,11 +287,6 @@ static int file_rw_chr_access(uint16_t conn_handle, uint16_t attr_handle,
         if (len == 0)
         {
             ESP_LOGI(TAG, "EOF reached");
-        
-            if (is_ota_active) {
-                gatt_complete_ota();
-            }
-        
             return 0;
         }        
 
