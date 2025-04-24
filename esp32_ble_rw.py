@@ -4,7 +4,7 @@ import os
 from bleak import BleakClient
 
 # ESP32 MAC address
-DEVICE_ADDRESS = "8c:4f:00:15:4d:7a"
+DEVICE_ADDRESS = "14:2b:2f:da:dc:5e"
 
 # UUIDs for GATT characteristics
 FILE_RW_CHAR_UUID = "00001526-1212-efde-1523-785feabcd123"     # Read/write file data
